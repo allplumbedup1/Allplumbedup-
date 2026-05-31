@@ -611,41 +611,62 @@ function done(){
 }
 
 function callAI(txt){
-  fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',max_tokens:800,
-      system:'You are a voice assistant for All Plumbed Up, a licensed Australian plumbing business owned by Frank. Extract structured info from site notes.\n\nRespond ONLY with valid JSON:\n{"address":null,"date":null,"jobNum":null,"client":null,"flatRate":null,"mat":[],"work":[],"photo":[],"note":[]}\n\naddress: job site address\ndate: date if mentioned\njobNum: job number\nclient: client or contractor name\nflatRate: dollar amount as number or null\nmat: materials/parts with sizes and quantities\nwork: work done or observations\nphoto: things to photograph\nnote: advice, warnings, technical notes\n\nAustralian plumbing: copper, PVC, flexi hose, PRV, tempering valve, isolating valve, HWS, Rheem, Dux, Rinnai, Sydney Water.',
-      messages:[{role:'user',content:'Frank said: "'+txt+'"'}]
-    })
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    if(data.error)throw new Error(data.error.message);
-    var raw=data.content.map(function(i){return i.text||'';}).join('');
-    var parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    var mc=false;
-    if(parsed.address){jobMeta.address=parsed.address;mc=true;}
-    if(parsed.date){jobMeta.date=parsed.date;mc=true;}
-    if(parsed.jobNum){jobMeta.jobNum=parsed.jobNum;mc=true;}
-    if(parsed.client){jobMeta.client=parsed.client;mc=true;}
-    if(parsed.flatRate){jobMeta.flatRate=parsed.flatRate;document.getElementById('totFlat').textContent='$'+parsed.flatRate;mc=true;}
-    if(mc)refreshMetaDisp();
-    if(parsed.mat&&parsed.mat.length)summary.mat=summary.mat.concat(parsed.mat);
-    if(parsed.work&&parsed.work.length)summary.work=summary.work.concat(parsed.work);
-    if(parsed.photo&&parsed.photo.length)summary.photo=summary.photo.concat(parsed.photo);
-    if(parsed.note&&parsed.note.length)summary.note=summary.note.concat(parsed.note);
-    log.push({id:Date.now(),time:now(),text:txt});
-    saveAll();renderAll();
-    toast('✓ Logged!');
-    done();
-  })
-  .catch(function(err){
-    console.error(err);
-    toast('Error — try again','var(--red)');
-    done();
+  // Local smart sorting — no API needed, works everywhere
+  var low=txt.toLowerCase();
+  var mc=false;
+
+  // Extract address — "job at X" or "address is X"
+  var addrMatch=txt.match(/job at ([^,\.]+)/i)||txt.match(/address[:\s]+([^,\.]+)/i)||txt.match(/at (\d+[^,\.]+(?:street|st|road|rd|ave|avenue|drive|dr|place|pl|court|ct|lane|ln|way|crescent|cres)[^,\.]*)/i);
+  if(addrMatch&&!jobMeta.address){jobMeta.address=addrMatch[1].trim();mc=true;}
+
+  // Extract client — "working for X" or "client is X"
+  var clientMatch=txt.match(/working for ([^,\.]+)/i)||txt.match(/client[:\s]+([^,\.]+)/i)||txt.match(/subcontract(?:ing)? (?:for|to) ([^,\.]+)/i);
+  if(clientMatch&&!jobMeta.client){jobMeta.client=clientMatch[1].trim();mc=true;}
+
+  // Extract flat rate/price
+  var priceMatch=txt.match(/\$(\d+(?:\.\d+)?)/)||txt.match(/(\d+(?:\.\d+)?) dollars/i)||txt.match(/charge[:\s]+(\d+)/i)||txt.match(/quote[:\s]+(\d+)/i);
+  if(priceMatch){jobMeta.flatRate=parseFloat(priceMatch[1]);document.getElementById('totFlat').textContent='$'+jobMeta.flatRate;mc=true;}
+
+  if(mc)refreshMetaDisp();
+
+  // Smart categorisation
+  var sentences=txt.split(/[,\.\n]+/).filter(function(s){return s.trim().length>3;});
+  
+  var matKeywords=['need','require','get','buy','order','pick up','15mm','20mm','25mm','32mm','40mm','50mm','65mm','80mm','100mm','copper','pvc','flexi','hose','valve','elbow','tee','fitting','pipe','tap','mixer','cistern','seat','washer','seal','filter','pump','unit','hot water','hws','rheem','dux','rinnai','tempering','prv','pressure','isolation','gate','ball','check','stop','cock','dn','compression','pushfit','push fit','saddle','clamp','bracket','thread','nipple','union','reducer','cap','plug','flange'];
+  var workKeywords=['replaced','replace','installed','install','fixed','fix','repaired','repair','done','completed','complete','cleared','clear','checked','check','tested','test','connected','connect','disconnected','disconnect','removed','remove','fitted','fit','adjusted','adjust','tightened','tighten','sealed','seal','flushed','flush','jetting','jet blasted','jet blast','cctv','camera','inspected','inspect','diagnosed','diagnose','found','located','unblocked','unblock'];
+  var photoKeywords=['photo','photograph','picture','pic','image','take a','shoot','capture','document','record'];
+  var noteKeywords=['warning','caution','note','advice','recommend','suggest','should','must','need to','important','urgent','asap','sydney water','compliance','council','regulation','standard','as/nzs','pressure','kpa','temperature','hot','cold','leak','drip','burst','crack','broken','damaged','corroded','rusty','old','worn','faulty','blocked','choked','overflowing','slow','gurgling','smell','noise','loud','vibrat','rattl'];
+
+  sentences.forEach(function(sentence){
+    var s=sentence.trim();
+    var sl=s.toLowerCase();
+    if(s.length<4)return;
+
+    // Skip if already captured as address or client
+    if(addrMatch&&s.toLowerCase().indexOf(addrMatch[1].toLowerCase())>=0)return;
+    if(clientMatch&&s.toLowerCase().indexOf(clientMatch[1].toLowerCase())>=0)return;
+
+    var isPhoto=photoKeywords.some(function(k){return sl.indexOf(k)>=0;});
+    var isMat=matKeywords.some(function(k){return sl.indexOf(k)>=0;});
+    var isWork=workKeywords.some(function(k){return sl.indexOf(k)>=0;});
+    var isNote=noteKeywords.some(function(k){return sl.indexOf(k)>=0;});
+
+    if(isPhoto){summary.photo.push(s);}
+    else if(isMat&&!isWork){summary.mat.push(s);}
+    else if(isWork){summary.work.push(s);}
+    else if(isNote){summary.note.push(s);}
+    else{
+      // Default: if has "need" or size → mat, if past tense verb → work, else note
+      if(sl.match(/\bneed\b|\brequire\b|\bget\b|\bpick up\b/))summary.mat.push(s);
+      else if(sl.match(/\bed\b|\bed\s/)||sl.match(/replaced|installed|fixed|cleared|repaired/))summary.work.push(s);
+      else summary.note.push(s);
+    }
   });
+
+  log.push({id:Date.now(),time:now(),text:txt});
+  saveAll();renderAll();
+  toast('✓ Logged!');
+  done();
 }
 
 // Render
@@ -719,23 +740,15 @@ function logPhotoDirect(url){
 }
 
 function identifyPart(b64,url){
-  document.getElementById('pScanning').classList.add('on');
-  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:'Identify plumbing parts for an Australian plumber. Respond ONLY with JSON: {"name":"Short part name","detail":"Brief description","confidence":"high|medium|low"}',messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},{type:'text',text:'What plumbing part is this?'}]}]})})
-  .then(function(r){return r.json();})
-  .then(function(data){
-    if(data.error)throw new Error(data.error.message);
-    var raw=data.content.map(function(i){return i.text||'';}).join('');
-    var parsed=JSON.parse(raw.replace(/```json|```/g,'').trim());
-    currentPartName=parsed.name;currentPartDetail=parsed.detail;
-    var conf=parsed.confidence==='high'?'✓':parsed.confidence==='medium'?'~':'?';
-    var re=document.getElementById('pResult');
-    re.innerHTML='<div class="pname">'+conf+' '+esc(parsed.name)+'</div><div class="pdesc">'+esc(parsed.detail)+'</div>';
-    re.classList.add('on');document.getElementById('btnAddPart').style.display='';
-    var t=now();photoLog.push({id:Date.now(),time:t,name:parsed.name,detail:parsed.detail,thumb:url,type:'part'});
-    renderPhotoLog();
-  })
-  .catch(function(){var re=document.getElementById('pResult');re.innerHTML='<div class="pdesc" style="color:var(--red)">Could not identify — try clearer photo</div>';re.classList.add('on');})
-  .finally(function(){document.getElementById('pScanning').classList.remove('on');});
+  // Log as part photo directly — no API needed
+  var t=now();
+  var re=document.getElementById('pResult');
+  re.innerHTML='<div class="pname">📷 Part Photo Logged</div><div class="pdesc">Photo saved — add description in the notes box above</div>';
+  re.classList.add('on');
+  photoLog.push({id:Date.now(),time:t,name:'Part Photo',detail:'',thumb:url,type:'part'});
+  summary.photo.push('Part photo — '+t);
+  saveAll();renderList('photoList',summary.photo);renderPhotoLog();
+  toast('✓ Part photo logged');
 }
 
 document.getElementById('btnAddPart').onclick=function(){
