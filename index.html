@@ -46,21 +46,29 @@ body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-
 .tbtn-out{background:var(--red);color:white;}
 .tbtn-off{background:var(--border);color:var(--muted);cursor:default;}
 
-.mic-section{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:14px;padding:4px 0;}
-.mic-wrap{position:relative;}
-.mic-ring{position:absolute;inset:-10px;border-radius:50%;border:2px solid rgba(245,166,35,0.25);opacity:0;transition:opacity 0.3s;}
-.mic-ring.on{opacity:1;animation:ring 1.4s ease infinite 0.2s;}
-@keyframes ring{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.5);opacity:0}}
-.mic-btn{width:96px;height:96px;border-radius:50%;border:3px solid var(--orange);background:var(--card);color:var(--orange);font-size:2.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;}
-.mic-btn.rec{background:var(--red);border-color:var(--red);color:white;animation:mp 1.4s ease infinite;}
-@keyframes mp{0%{box-shadow:0 0 0 0 rgba(232,64,64,0.5)}70%{box-shadow:0 0 0 20px rgba(232,64,64,0)}100%{box-shadow:0 0 0 0 rgba(232,64,64,0)}}
-.mic-lbl{font-family:'DM Mono';font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;min-height:18px;}
-.mic-lbl.rec{color:var(--red);}
-.mic-lbl.proc{color:var(--orange);}
-.mic-lbl.done{color:var(--green);}
-.tbubble{background:rgba(42,143,255,0.06);border:1px solid rgba(42,143,255,0.18);border-radius:10px;padding:10px 12px;width:100%;min-height:44px;font-size:0.86rem;line-height:1.6;color:var(--ink);font-style:italic;display:none;}
-.tbubble.on{display:block;}
-.interim{color:var(--muted);}
+/* ── VOICE INPUT SECTION ── */
+.voice-section{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--orange);border-radius:10px;padding:14px;margin-bottom:12px;}
+.voice-title{font-family:'DM Mono';font-size:0.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:10px;}
+.voice-hint{background:rgba(245,166,35,0.06);border:1px dashed rgba(245,166,35,0.25);border-radius:8px;padding:10px 12px;margin-bottom:10px;}
+.voice-hint-title{font-family:'DM Mono';font-size:0.6rem;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.voice-hint p{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+.voice-hint strong{color:var(--ink);}
+.voice-input-wrap{position:relative;margin-bottom:10px;}
+.voice-input{width:100%;background:var(--bg);border:2px solid var(--orange);border-radius:10px;color:var(--ink);font-family:'DM Sans';font-size:0.95rem;padding:14px 14px 44px;min-height:100px;resize:none;outline:none;line-height:1.5;}
+.voice-input::placeholder{color:var(--muted);}
+.voice-input:focus{border-color:#ffd04f;}
+.voice-input-footer{position:absolute;bottom:0;left:0;right:0;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:rgba(245,166,35,0.05);border-top:1px solid var(--border);border-radius:0 0 8px 8px;}
+.voice-kbd-hint{font-family:'DM Mono';font-size:0.6rem;color:var(--muted);letter-spacing:1px;}
+.voice-char-count{font-family:'DM Mono';font-size:0.6rem;color:var(--muted);}
+.voice-btn-row{display:flex;gap:8px;flex-wrap:wrap;}
+.log-btn{font-family:'DM Mono';font-size:0.75rem;font-weight:600;padding:12px 20px;border-radius:8px;border:none;cursor:pointer;text-transform:uppercase;letter-spacing:1px;-webkit-tap-highlight-color:transparent;flex:1;}
+.log-btn-primary{background:var(--orange);color:#0a0c0f;}
+.log-btn-primary:active{background:#ffd04f;}
+.log-btn-clear{background:transparent;color:var(--muted);border:1px solid var(--border);flex:0;padding:12px 14px;}
+.processing-bar{background:rgba(245,166,35,0.06);border:1px solid rgba(245,166,35,0.2);border-radius:8px;padding:10px 12px;margin-top:8px;display:none;align-items:center;gap:10px;font-family:'DM Mono';font-size:0.72rem;color:var(--orange);}
+.processing-bar.on{display:flex;}
+.spin{width:14px;height:14px;border:2px solid rgba(245,166,35,0.3);border-top-color:var(--orange);border-radius:50%;animation:spn 0.7s linear infinite;flex-shrink:0;}
+@keyframes spn{to{transform:rotate(360deg)}}
 
 .how-to{background:rgba(245,166,35,0.04);border:1px dashed rgba(245,166,35,0.2);border-radius:10px;padding:12px 14px;margin-bottom:12px;}
 .ht-title{font-family:'DM Mono';font-size:0.6rem;color:var(--orange);letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
@@ -84,8 +92,6 @@ body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-
 .pdesc{color:var(--muted);font-size:0.74rem;margin-top:2px;}
 .photo-scanning{font-family:'DM Mono';font-size:0.68rem;color:var(--orange);display:none;align-items:center;gap:8px;}
 .photo-scanning.on{display:flex;}
-.spin{width:13px;height:13px;border:2px solid rgba(245,166,35,0.3);border-top-color:var(--orange);border-radius:50%;animation:spn 0.7s linear infinite;}
-@keyframes spn{to{transform:rotate(360deg)}}
 .photo-log-list{margin-top:10px;display:flex;flex-direction:column;gap:6px;}
 .pli{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 11px;display:flex;gap:8px;align-items:flex-start;}
 .pli-thumb{width:40px;height:40px;border-radius:6px;object-fit:cover;flex-shrink:0;}
@@ -155,12 +161,10 @@ body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-
 
 .history-list{display:flex;flex-direction:column;gap:8px;}
 .hist-item{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:11px 13px;cursor:pointer;}
-.hist-item:active{border-color:var(--purple);}
 .hist-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;}
 .hist-num{font-family:'DM Mono';font-size:0.63rem;color:var(--purple);}
 .hist-date{font-family:'DM Mono';font-size:0.61rem;color:var(--muted);}
 .hist-addr{font-size:0.82rem;font-weight:600;color:var(--ink);}
-.hist-client{font-size:0.72rem;color:var(--muted);}
 .hist-tags{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;}
 .hist-tag{font-family:'DM Mono';font-size:0.56rem;padding:2px 7px;border-radius:10px;border:1px solid var(--border);color:var(--muted);}
 
@@ -203,8 +207,6 @@ body{background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;min-
 
 .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a2030;border:1px solid var(--border);padding:9px 18px;border-radius:8px;font-family:'DM Mono';font-size:0.7rem;color:var(--green);opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;z-index:300;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-.no-speech{background:rgba(232,64,64,0.07);border:1px solid rgba(232,64,64,0.25);border-radius:8px;padding:9px 13px;font-size:0.78rem;color:#f08080;margin-bottom:10px;display:none;}
-.no-speech.show{display:block;}
 hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
 </style>
 </head>
@@ -223,7 +225,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
   </div>
 </div>
 
-<!-- History Detail Modal -->
+<!-- History Modal -->
 <div class="hist-modal-ov" id="histModal">
   <div class="hist-modal">
     <div class="hm-hdr">
@@ -260,10 +262,10 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
   <div class="job-panel">
     <div class="job-panel-lbl">Current Job</div>
     <div class="job-fields">
-      <div class="jf"><span class="jfl">Address</span><span class="jfv empty" id="dispAddr">Say "job at…"</span></div>
+      <div class="jf"><span class="jfl">Address</span><span class="jfv empty" id="dispAddr">Tap mic below to add</span></div>
       <div class="jf"><span class="jfl">Date</span><span class="jfv" id="dispDate">—</span></div>
       <div class="jf"><span class="jfl">Job #</span><span class="jfv" id="dispJob">—</span></div>
-      <div class="jf"><span class="jfl">Client</span><span class="jfv empty" id="dispClient">Say "working for…"</span></div>
+      <div class="jf"><span class="jfl">Client</span><span class="jfv empty" id="dispClient">Tap mic below to add</span></div>
     </div>
   </div>
 
@@ -279,18 +281,35 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
     </div>
   </div>
 
-  <div class="mic-section">
-    <div class="mic-wrap">
-      <div class="mic-ring" id="micRing"></div>
-      <button class="mic-btn" id="micBtn">🎙️</button>
+  <!-- Voice Input Section -->
+  <div class="voice-section">
+    <div class="voice-title">🎙️ Speak Your Notes</div>
+    <div class="voice-hint">
+      <div class="voice-hint-title">📱 How to use voice on your phone/tablet:</div>
+      <p>1. Tap inside the box below<br>
+      2. Your keyboard opens — tap the <strong>🎤 microphone icon</strong> on your keyboard<br>
+      3. Speak your notes naturally<br>
+      4. Tap <strong>Log It</strong> when done</p>
     </div>
-    <div class="mic-lbl" id="micLbl">Tap to speak</div>
-    <div class="tbubble" id="tbubble"></div>
-    <button class="btn btn-gh" id="btnMicPerm" style="font-size:0.7rem;margin-top:6px;border-color:var(--orange);color:var(--orange);">🎤 Enable Microphone</button>
+    <div class="voice-input-wrap">
+      <textarea class="voice-input" id="voiceInput" placeholder="Tap here, then tap the 🎤 mic on your keyboard and speak...&#10;&#10;e.g. Job at 14 Smith Street Campbelltown, need 25mm gate valve and two copper elbows, hot water unit leaking from base, take a photo of the flue connection"></textarea>
+      <div class="voice-input-footer">
+        <span class="voice-kbd-hint">👆 Tap here → tap 🎤 on keyboard → speak</span>
+        <span class="voice-char-count" id="charCount">0 chars</span>
+      </div>
+    </div>
+    <div class="voice-btn-row">
+      <button class="log-btn log-btn-primary" id="btnLog">⚡ Log It</button>
+      <button class="log-btn log-btn-clear" id="btnClear">✕</button>
+    </div>
+    <div class="processing-bar" id="procBar">
+      <div class="spin"></div>
+      <span>AI is sorting your notes…</span>
+    </div>
   </div>
 
-  <div class="how-to" id="howTo">
-    <div class="ht-title">🗣 Just say it naturally</div>
+  <div class="how-to">
+    <div class="ht-title">💬 Just say it naturally — examples</div>
     <ul class="ht-list">
       <li>📍 "<span class="ex">Job at 14 George Street Campbelltown</span>"</li>
       <li>⏱ "<span class="ex">Clock in</span>" or "<span class="ex">Clock out</span>"</li>
@@ -298,12 +317,10 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
       <li>✅ "<span class="ex">Replaced flexi hose under kitchen sink</span>"</li>
       <li>💡 "<span class="ex">PRV reading 750 kPa needs replacing</span>"</li>
       <li>🔨 "<span class="ex">Working for Peter Lawford Plumbing</span>"</li>
-      <li>💬 "<span class="ex">Generate quote, three fifty</span>"</li>
+      <li>💬 "<span class="ex">Generate quote three fifty</span>"</li>
       <li>📁 "<span class="ex">Save job</span>" or "<span class="ex">New job</span>"</li>
     </ul>
   </div>
-
-  <div class="no-speech" id="noSpeech">⚠️ Voice not available. Use Chrome on Android.</div>
 
   <div class="photo-section">
     <div class="photo-title">📷 Photo — Before / After / Identify Part</div>
@@ -358,8 +375,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
     </div>
     <div class="panel-body" id="bodyClients">
       <div class="client-list" id="clientList"><div class="no-data">No clients saved yet</div></div>
-      <div class="panel-hint">🗣 Say "new client, Land and Lease, 14 Smith Street" to save</div>
-      <div class="panel-hint">🗣 Say "load client Land and Lease" to fill job details</div>
+      <div class="panel-hint">Type "new client, Land and Lease, 14 Smith Street" in the box above and tap Log It</div>
     </div>
   </div>
 
@@ -386,7 +402,6 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
         <button class="btn btn-or" id="btnQStella" style="display:none;">💬 Send to Stella</button>
         <button class="btn btn-gh" id="btnQClient" style="display:none;">📱 Send to Client</button>
       </div>
-      <div class="panel-hint" style="margin-top:8px;">🗣 Say "generate quote, three fifty" to build from current job</div>
     </div>
   </div>
 
@@ -402,8 +417,8 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
   </div>
 
   <hr class="div">
-  <div class="log-title">Full Voice Log</div>
-  <div class="entries" id="entriesList"><div class="no-data" style="padding:6px 0;">Nothing logged yet — tap the mic!</div></div>
+  <div class="log-title">Full Log</div>
+  <div class="entries" id="entriesList"><div class="no-data" style="padding:6px 0;">Nothing logged yet</div></div>
 
   <hr class="div">
   <div class="export-bar">
@@ -411,7 +426,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
     <div class="btn-row">
       <button class="btn btn-or" id="btnStella">💬 Stella</button>
       <button class="btn btn-gh" id="btnCSV">📊 CSV</button>
-      <button class="btn btn-gh" id="btnCopy">📋 Copy</button>
+      <button class="btn btn-gh" id="btnCopyR">📋 Copy</button>
       <button class="btn btn-rd" id="btnNewJob">🗑 New Job</button>
     </div>
   </div>
@@ -420,71 +435,47 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
 <div class="toast" id="toast"></div>
 
 <script>
-// ── Helpers ───────────────────────────────────────────────────────
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function toast(msg,col){
-  var t=document.getElementById('toast');
-  t.textContent=msg;
-  t.style.color=col||'var(--green)';
-  t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');},2600);
-}
+function toast(msg,col){var t=document.getElementById('toast');t.textContent=msg;t.style.color=col||'var(--green)';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2600);}
 function now(){return new Date().toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit'});}
 function ls(k,def){try{var v=localStorage.getItem(k);return v?JSON.parse(v):def;}catch(e){return def;}}
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function pad(n){return String(n).padStart(2,'0');}
 
-// ── State ─────────────────────────────────────────────────────────
-var log      = ls('vlog_log',[]);
-var summary  = ls('vlog_sum',{mat:[],work:[],photo:[],note:[]});
-var jobMeta  = ls('vlog_meta',{address:'',jobNum:'',date:'',client:'',type:'timed',flatRate:null});
-var photoLog = ls('vlog_photos',[]);
-var clients  = ls('vlog_clients',[]);
-var jobHistory = ls('vlog_history',[]);
-var hourlyRate = parseFloat(localStorage.getItem('vlog_rate')||'0');
-var timerElapsed = parseInt(localStorage.getItem('vlog_elapsed')||'0');
-var timerRunning = false;
-var timerStart = null;
-var timerInterval = null;
-var isListening = false;
-var isProcessing = false;
-var isLocked = false;
-var recognition = null;
-var speechOK = false;
-var currentPhotoB64 = null;
-var currentPartName = null;
-var currentPartDetail = null;
-var currentPhotoType = 'before';
-var viewingJob = null;
-var lastQuote = null;
+var log=ls('vlog_log',[]);
+var summary=ls('vlog_sum',{mat:[],work:[],photo:[],note:[]});
+var jobMeta=ls('vlog_meta',{address:'',jobNum:'',date:'',client:'',type:'timed',flatRate:null});
+var photoLog=ls('vlog_photos',[]);
+var clients=ls('vlog_clients',[]);
+var jobHistory=ls('vlog_history',[]);
+var hourlyRate=parseFloat(localStorage.getItem('vlog_rate')||'0');
+var timerElapsed=parseInt(localStorage.getItem('vlog_elapsed')||'0');
+var timerRunning=false;
+var timerStart=null;
+var timerInterval=null;
+var currentPhotoB64=null;
+var currentPartName=null;
+var currentPartDetail=null;
+var currentPhotoType='before';
+var viewingJob=null;
+var lastQuote=null;
 
-// ── Clock ─────────────────────────────────────────────────────────
-function tickClock(){
-  document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-}
+// Clock
+function tickClock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('en-AU',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
 setInterval(tickClock,1000);tickClock();
 
-// ── Init ──────────────────────────────────────────────────────────
+// Init
 var today=new Date().toLocaleDateString('en-AU',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
 if(!jobMeta.date)jobMeta.date=today;
 if(!jobMeta.jobNum)jobMeta.jobNum=genJobNum();
 if(!jobMeta.type)jobMeta.type='timed';
 
-// Resume timer if was running
 var savedTS=localStorage.getItem('vlog_timerstart');
 if(savedTS){timerStart=parseInt(savedTS);timerRunning=true;startTimerTick();}
 
-function genJobNum(){
-  var d=new Date();
-  return 'APU-'+d.getFullYear()+'-'+pad(d.getMonth()+1)+pad(d.getDate())+'-'+pad(Math.floor(Math.random()*99)+1);
-}
-function pad(n){return String(n).padStart(2,'0');}
+function genJobNum(){var d=new Date();return 'APU-'+d.getFullYear()+'-'+pad(d.getMonth()+1)+pad(d.getDate())+'-'+pad(Math.floor(Math.random()*99)+1);}
 
-// ── Setup speech ──────────────────────────────────────────────────
-var SRClass=window.SpeechRecognition||window.webkitSpeechRecognition||null;
-speechOK=!!SRClass;
-if(!speechOK)document.getElementById('noSpeech').classList.add('show');
-
-// ── Job type ──────────────────────────────────────────────────────
+// Job type
 document.getElementById('btnTimed').onclick=function(){setType('timed');};
 document.getElementById('btnCharge').onclick=function(){setType('charge');};
 document.getElementById('btnSub').onclick=function(){setType('sub');};
@@ -498,219 +489,107 @@ function setType(t,silent){
   document.getElementById('flatField').style.display=t==='charge'?'':'none';
 }
 
-// ── Rate ──────────────────────────────────────────────────────────
-document.getElementById('btnSetRate').onclick=function(){
-  document.getElementById('rateInput').value=hourlyRate||'';
-  document.getElementById('rateModal').classList.add('open');
-};
+// Rate
+document.getElementById('btnSetRate').onclick=function(){document.getElementById('rateInput').value=hourlyRate||'';document.getElementById('rateModal').classList.add('open');};
 document.getElementById('btnRateCancel').onclick=function(){document.getElementById('rateModal').classList.remove('open');};
 document.getElementById('btnRateSave').onclick=saveRate;
 document.getElementById('rateInput').onkeydown=function(e){if(e.key==='Enter')saveRate();};
-function saveRate(){
-  var v=parseFloat(document.getElementById('rateInput').value);
-  if(!v||v<1){toast('Enter a valid rate','var(--red)');return;}
-  hourlyRate=v;
-  localStorage.setItem('vlog_rate',v);
-  document.getElementById('rateModal').classList.remove('open');
-  updateRateDisp();updateTotals();
-  toast('Rate set to $'+v+'/hr');
-}
-function updateRateDisp(){
-  document.getElementById('timerRate').textContent=hourlyRate?'Rate: $'+hourlyRate+'/hr':'Rate: tap ⚙ to set';
-}
+function saveRate(){var v=parseFloat(document.getElementById('rateInput').value);if(!v||v<1){toast('Enter a valid rate','var(--red)');return;}hourlyRate=v;localStorage.setItem('vlog_rate',v);document.getElementById('rateModal').classList.remove('open');updateRateDisp();updateTotals();toast('Rate set to $'+v+'/hr');}
+function updateRateDisp(){document.getElementById('timerRate').textContent=hourlyRate?'Rate: $'+hourlyRate+'/hr':'Rate: tap ⚙ to set';}
 
-// ── Timer ─────────────────────────────────────────────────────────
+// Timer
 document.getElementById('btnCI').onclick=clockIn;
 document.getElementById('btnCO').onclick=clockOut;
 
 function clockIn(){
   if(timerRunning)return;
-  timerRunning=true;
-  timerStart=Date.now()-timerElapsed;
+  timerRunning=true;timerStart=Date.now()-timerElapsed;
   localStorage.setItem('vlog_timerstart',timerStart);
   startTimerTick();
-  document.getElementById('btnCI').className='tbtn tbtn-off';
-  document.getElementById('btnCI').disabled=true;
-  document.getElementById('btnCO').className='tbtn tbtn-out';
-  document.getElementById('btnCO').disabled=false;
+  document.getElementById('btnCI').className='tbtn tbtn-off';document.getElementById('btnCI').disabled=true;
+  document.getElementById('btnCO').className='tbtn tbtn-out';document.getElementById('btnCO').disabled=false;
   document.getElementById('timerDisp').classList.add('running');
-  var t=now();
-  log.push({id:Date.now(),time:t,text:'⏱ Clocked IN — '+t});
-  saveAll();renderEntries();
-  toast('Clocked in at '+t);
+  var t=now();log.push({id:Date.now(),time:t,text:'⏱ Clocked IN — '+t});
+  saveAll();renderEntries();toast('Clocked in at '+t);
 }
 
 function clockOut(){
   if(!timerRunning)return;
-  timerRunning=false;
-  timerElapsed=Date.now()-timerStart;
-  localStorage.setItem('vlog_elapsed',timerElapsed);
-  localStorage.removeItem('vlog_timerstart');
+  timerRunning=false;timerElapsed=Date.now()-timerStart;
+  localStorage.setItem('vlog_elapsed',timerElapsed);localStorage.removeItem('vlog_timerstart');
   clearInterval(timerInterval);
-  document.getElementById('btnCI').className='tbtn tbtn-in';
-  document.getElementById('btnCI').disabled=false;
-  document.getElementById('btnCO').className='tbtn tbtn-off';
-  document.getElementById('btnCO').disabled=true;
+  document.getElementById('btnCI').className='tbtn tbtn-in';document.getElementById('btnCI').disabled=false;
+  document.getElementById('btnCO').className='tbtn tbtn-off';document.getElementById('btnCO').disabled=true;
   document.getElementById('timerDisp').classList.remove('running');
-  var t=now();
-  var hrs=fmtHours(timerElapsed);
+  var t=now();var hrs=fmtHours(timerElapsed);
   log.push({id:Date.now(),time:t,text:'⏱ Clocked OUT — '+t+' | Total: '+hrs});
-  saveAll();renderEntries();updateTotals();
-  toast('Clocked out — '+hrs+' on site');
+  saveAll();renderEntries();updateTotals();toast('Clocked out — '+hrs+' on site');
 }
 
 function startTimerTick(){
   clearInterval(timerInterval);
   timerInterval=setInterval(function(){updateTimerDisp();updateTotals();},1000);
   updateTimerDisp();updateTotals();
-  document.getElementById('btnCI').className='tbtn tbtn-off';
-  document.getElementById('btnCI').disabled=true;
-  document.getElementById('btnCO').className='tbtn tbtn-out';
-  document.getElementById('btnCO').disabled=false;
+  document.getElementById('btnCI').className='tbtn tbtn-off';document.getElementById('btnCI').disabled=true;
+  document.getElementById('btnCO').className='tbtn tbtn-out';document.getElementById('btnCO').disabled=false;
   document.getElementById('timerDisp').classList.add('running');
 }
 
-function updateTimerDisp(){
-  var el=timerRunning?Date.now()-timerStart:timerElapsed;
-  document.getElementById('timerDisp').textContent=fmtTime(el);
-}
-
-function fmtTime(ms){
-  var s=Math.floor(ms/1000);
-  var h=Math.floor(s/3600);
-  var m=Math.floor((s%3600)/60);
-  var sec=s%60;
-  return pad(h)+':'+pad(m)+':'+pad(sec);
-}
-
+function updateTimerDisp(){var el=timerRunning?Date.now()-timerStart:timerElapsed;document.getElementById('timerDisp').textContent=fmtTime(el);}
+function fmtTime(ms){var s=Math.floor(ms/1000);var h=Math.floor(s/3600);var m=Math.floor((s%3600)/60);var sec=s%60;return pad(h)+':'+pad(m)+':'+pad(sec);}
 function fmtHours(ms){return (ms/3600000).toFixed(2)+' hrs';}
-
 function updateTotals(){
-  var el=timerRunning?Date.now()-timerStart:timerElapsed;
-  var hrs=el/3600000;
+  var el=timerRunning?Date.now()-timerStart:timerElapsed;var hrs=el/3600000;
   document.getElementById('totTime').textContent=el>0?fmtHours(el):'—';
   document.getElementById('totRate').textContent=hourlyRate?'$'+hourlyRate+'/hr':'—';
-  if(el>0&&hourlyRate){document.getElementById('totLabour').textContent='$'+(hrs*hourlyRate).toFixed(2);}
-  else{document.getElementById('totLabour').textContent='—';}
+  if(el>0&&hourlyRate)document.getElementById('totLabour').textContent='$'+(hrs*hourlyRate).toFixed(2);
+  else document.getElementById('totLabour').textContent='—';
 }
 
-// ── Mic permission button ─────────────────────────────────────────
-document.getElementById('btnMicPerm').onclick=function(){
-  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
-    navigator.mediaDevices.getUserMedia({audio:true})
-    .then(function(stream){
-      stream.getTracks().forEach(function(t){t.stop();});
-      document.getElementById('btnMicPerm').textContent='✓ Microphone allowed!';
-      document.getElementById('btnMicPerm').style.borderColor='var(--green)';
-      document.getElementById('btnMicPerm').style.color='var(--green)';
-      toast('Microphone enabled — tap the mic to speak!');
-      setTimeout(function(){document.getElementById('btnMicPerm').style.display='none';},3000);
-    })
-    .catch(function(err){
-      toast('Microphone blocked — check Settings > Apps > Chrome > Permissions','var(--red)');
-      document.getElementById('btnMicPerm').textContent='⚠️ Blocked — tap for help';
-    });
-  } else {
-    toast('Browser does not support microphone','var(--red)');
-  }
+// Voice input - character counter
+document.getElementById('voiceInput').oninput=function(){
+  document.getElementById('charCount').textContent=this.value.length+' chars';
 };
 
-// ── Mic ───────────────────────────────────────────────────────────
-document.getElementById('micBtn').onclick=function(){
-  if(isLocked||isProcessing)return;
-  if(!speechOK){toast('Use Chrome on Android','var(--red)');return;}
-  if(isListening){if(recognition){try{recognition.stop();}catch(e){}}isListening=false;}
-  else{startListening();}
+// Log button
+document.getElementById('btnLog').onclick=function(){
+  var txt=document.getElementById('voiceInput').value.trim();
+  if(!txt){toast('Type or speak something first','var(--red)');return;}
+  processNote(txt);
 };
 
-function buildRec(){
-  if(!SRClass)return null;
-  var r=new SRClass();
-  r.continuous=false;r.interimResults=true;r.lang='en-AU';r._final='';
-  r.onresult=function(e){
-    var interim='',final='';
-    for(var i=e.resultIndex;i<e.results.length;i++){
-      if(e.results[i].isFinal)final+=e.results[i][0].transcript;
-      else interim+=e.results[i][0].transcript;
-    }
-    var b=document.getElementById('tbubble');
-    b.classList.add('on');
-    b.innerHTML=esc(r._final+final)+(interim?'<span class="interim"> '+esc(interim)+'</span>':'');
-    if(final)r._final+=final;
-  };
-  r.onend=function(){
-    isLocked=false;
-    var txt=(r._final||'').trim();
-    recognition=null;
-    if(txt)processNote(txt);else resetMic();
-  };
-  r.onerror=function(e){
-    isLocked=false;recognition=null;
-    if(e.error==='no-speech'){resetMic();return;}
-    document.getElementById('noSpeech').classList.add('show');
-    document.getElementById('noSpeech').textContent='⚠️ Mic error: '+e.error+'. Check permissions.';
-    resetMic();
-  };
-  return r;
-}
+document.getElementById('btnClear').onclick=function(){
+  document.getElementById('voiceInput').value='';
+  document.getElementById('charCount').textContent='0 chars';
+};
 
-function startListening(){
-  if(isLocked)return;
-  isLocked=true;isListening=true;
-  recognition=buildRec();
-  if(!recognition){isLocked=false;isListening=false;return;}
-  try{recognition.start();}catch(e){isLocked=false;isListening=false;recognition=null;resetMic();return;}
-  document.getElementById('micBtn').className='mic-btn rec';
-  document.getElementById('micBtn').textContent='⏹';
-  document.getElementById('micLbl').textContent='Listening… tap to stop';
-  document.getElementById('micLbl').className='mic-lbl rec';
-  document.getElementById('micRing').classList.add('on');
-  document.getElementById('tbubble').innerHTML='';
-  document.getElementById('tbubble').classList.add('on');
-  document.getElementById('howTo').style.display='none';
-}
-
-function resetMic(){
-  isListening=false;isProcessing=false;isLocked=false;
-  document.getElementById('micBtn').className='mic-btn';
-  document.getElementById('micBtn').textContent='🎙️';
-  document.getElementById('micLbl').textContent='Tap to speak';
-  document.getElementById('micLbl').className='mic-lbl';
-  document.getElementById('micRing').classList.remove('on');
-}
-
-// ── Process voice note ────────────────────────────────────────────
+// Process note
 function processNote(txt){
-  isListening=false;isProcessing=true;
-  document.getElementById('micBtn').className='mic-btn';
-  document.getElementById('micBtn').textContent='⚙️';
-  document.getElementById('micLbl').textContent='Logging…';
-  document.getElementById('micLbl').className='mic-lbl proc';
-  document.getElementById('micRing').classList.remove('on');
-  document.getElementById('tbubble').classList.add('on');
-  document.getElementById('tbubble').innerHTML='"'+esc(txt)+'"';
+  document.getElementById('procBar').classList.add('on');
+  document.getElementById('btnLog').disabled=true;
 
   var low=txt.toLowerCase();
 
   // Voice commands
-  if(low.indexOf('clock in')>=0||low.indexOf('clocked in')>=0){clockIn();resetMic();return;}
-  if(low.indexOf('clock out')>=0||low.indexOf('clocked out')>=0){clockOut();resetMic();return;}
-  if(low.indexOf('save job')>=0){saveJobToHistory();resetMic();return;}
-  if(low.indexOf('new job')>=0){confirmNewJob();resetMic();return;}
-  if(low.indexOf('timed job')>=0){setType('timed');toast('Timed Job');resetMic();return;}
-  if(low.indexOf('do and charge')>=0||low.indexOf('do & charge')>=0){setType('charge');toast('Do & Charge');resetMic();return;}
-  if(low.indexOf('subcontract')>=0){setType('sub');toast('Subcontract');resetMic();return;}
+  if(low.indexOf('clock in')>=0){clockIn();done();return;}
+  if(low.indexOf('clock out')>=0){clockOut();done();return;}
+  if(low.indexOf('save job')>=0){saveJobToHistory();done();return;}
+  if(low.indexOf('new job')>=0){confirmNewJob();done();return;}
+  if(low.indexOf('timed job')>=0){setType('timed');toast('Timed Job');done();return;}
+  if(low.indexOf('do and charge')>=0){setType('charge');toast('Do & Charge');done();return;}
+  if(low.indexOf('subcontract')>=0){setType('sub');toast('Subcontract');done();return;}
 
   if(low.indexOf('new client')>=0||low.indexOf('save client')>=0){
     var p=txt.replace(/new client[,\s]*/i,'').replace(/save client[,\s]*/i,'').split(',');
-    if(p[0]){addClient(p[0].trim(),p[1]?p[1].trim():'');resetMic();return;}
+    if(p[0]){addClient(p[0].trim(),p[1]?p[1].trim():'');}
+    done();return;
   }
-  if(low.indexOf('load client')>=0||low.indexOf('open client')>=0){
-    var s=txt.replace(/load client[,\s]*/i,'').replace(/open client[,\s]*/i,'').trim().toLowerCase();
+  if(low.indexOf('load client')>=0){
+    var s=txt.replace(/load client[,\s]*/i,'').trim().toLowerCase();
     var f=null;
     for(var i=0;i<clients.length;i++){if(clients[i].name.toLowerCase().indexOf(s)>=0){f=clients[i];break;}}
-    if(f){loadClient(f.id);}else{toast('Client not found','var(--red)');}
-    resetMic();return;
+    if(f)loadClient(f.id);else toast('Client not found','var(--red)');
+    done();return;
   }
   if(low.indexOf('generate quote')>=0||low.indexOf('build quote')>=0){
     var am=txt.match(/\$?(\d+(?:\.\d+)?)/);
@@ -718,13 +597,17 @@ function processNote(txt){
     document.getElementById('qAddr').value=jobMeta.address||'';
     if(summary.work.length)document.getElementById('qDesc').value=summary.work.join(', ');
     if(am)document.getElementById('qAmt').value=am[1];
-    buildQuote();
-    openPanel('Quotes');
-    resetMic();return;
+    buildQuote();openPanel('Quotes');done();return;
   }
 
-  // Send to AI
   callAI(txt);
+}
+
+function done(){
+  document.getElementById('procBar').classList.remove('on');
+  document.getElementById('btnLog').disabled=false;
+  document.getElementById('voiceInput').value='';
+  document.getElementById('charCount').textContent='0 chars';
 }
 
 function callAI(txt){
@@ -732,9 +615,8 @@ function callAI(txt){
     method:'POST',
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',
-      max_tokens:800,
-      system:'You are a voice assistant for All Plumbed Up, a licensed Australian plumbing business owned by Frank. Extract structured info from site notes.\n\nRespond ONLY with valid JSON:\n{"address":null,"date":null,"jobNum":null,"client":null,"flatRate":null,"mat":[],"work":[],"photo":[],"note":[]}\n\naddress: job site address if mentioned\ndate: date if mentioned\njobNum: job number if mentioned\nclient: client or contractor name if mentioned\nflatRate: dollar amount if a price/charge is mentioned (number only)\nmat: materials/parts needed with sizes and quantities\nwork: work done or observations\nphoto: things to photograph\nnote: advice, warnings, technical notes\n\nAustralian plumbing context: copper, PVC, flexi hose, PRV, tempering valve, isolating valve, gate valve, HWS, Rheem, Dux, Rinnai, Sydney Water.',
+      model:'claude-sonnet-4-20250514',max_tokens:800,
+      system:'You are a voice assistant for All Plumbed Up, a licensed Australian plumbing business owned by Frank. Extract structured info from site notes.\n\nRespond ONLY with valid JSON:\n{"address":null,"date":null,"jobNum":null,"client":null,"flatRate":null,"mat":[],"work":[],"photo":[],"note":[]}\n\naddress: job site address\ndate: date if mentioned\njobNum: job number\nclient: client or contractor name\nflatRate: dollar amount as number or null\nmat: materials/parts with sizes and quantities\nwork: work done or observations\nphoto: things to photograph\nnote: advice, warnings, technical notes\n\nAustralian plumbing: copper, PVC, flexi hose, PRV, tempering valve, isolating valve, HWS, Rheem, Dux, Rinnai, Sydney Water.',
       messages:[{role:'user',content:'Frank said: "'+txt+'"'}]
     })
   })
@@ -756,18 +638,17 @@ function callAI(txt){
     if(parsed.note&&parsed.note.length)summary.note=summary.note.concat(parsed.note);
     log.push({id:Date.now(),time:now(),text:txt});
     saveAll();renderAll();
-    document.getElementById('micLbl').textContent='✓ Logged!';
-    document.getElementById('micLbl').className='mic-lbl done';
-    setTimeout(resetMic,1400);
+    toast('✓ Logged!');
+    done();
   })
   .catch(function(err){
     console.error(err);
-    toast('Error — tap mic to try again','var(--red)');
-    resetMic();
+    toast('Error — try again','var(--red)');
+    done();
   });
 }
 
-// ── Render ────────────────────────────────────────────────────────
+// Render
 function renderAll(){
   renderList('matList',summary.mat);
   renderList('workList',summary.work);
@@ -784,7 +665,7 @@ function renderList(id,arr){
 
 function renderEntries(){
   var el=document.getElementById('entriesList');
-  if(!log.length){el.innerHTML='<div class="no-data" style="padding:6px 0;">Nothing logged yet — tap the mic!</div>';return;}
+  if(!log.length){el.innerHTML='<div class="no-data" style="padding:6px 0;">Nothing logged yet</div>';return;}
   var html='';
   for(var i=log.length-1;i>=0;i--){
     var e=log[i];
@@ -796,37 +677,20 @@ function renderEntries(){
 function refreshMetaDisp(){
   var ae=document.getElementById('dispAddr');
   if(jobMeta.address){ae.textContent=jobMeta.address;ae.className='jfv';}
-  else{ae.textContent='Say "job at…"';ae.className='jfv empty';}
+  else{ae.textContent='Tap mic below to add';ae.className='jfv empty';}
   document.getElementById('dispDate').textContent=jobMeta.date||today;
   document.getElementById('dispJob').textContent=jobMeta.jobNum||'—';
   var ce=document.getElementById('dispClient');
   if(jobMeta.client){ce.textContent=jobMeta.client;ce.className='jfv';}
-  else{ce.textContent='Say "working for…"';ce.className='jfv empty';}
+  else{ce.textContent='Tap mic below to add';ce.className='jfv empty';}
 }
 
-// ── Delete entry ──────────────────────────────────────────────────
-window.delEntry=function(id){
-  log=log.filter(function(e){return e.id!==id;});
-  saveAll();renderEntries();
-  document.getElementById('cntBadge').textContent=log.length+' entr'+(log.length===1?'y':'ies');
-};
+window.delEntry=function(id){log=log.filter(function(e){return e.id!==id;});saveAll();renderEntries();document.getElementById('cntBadge').textContent=log.length+' entr'+(log.length===1?'y':'ies');};
 
-// ── Save ──────────────────────────────────────────────────────────
-function saveAll(){
-  lss('vlog_log',log);
-  lss('vlog_sum',summary);
-  lss('vlog_meta',jobMeta);
-  lss('vlog_photos',photoLog.map(function(p){return Object.assign({},p,{thumb:null});}));
-}
+function saveAll(){lss('vlog_log',log);lss('vlog_sum',summary);lss('vlog_meta',jobMeta);lss('vlog_photos',photoLog.map(function(p){return Object.assign({},p,{thumb:null});}));}
 
-// ── Photo ─────────────────────────────────────────────────────────
-document.querySelectorAll('.ptype').forEach(function(btn){
-  btn.onclick=function(){
-    document.querySelectorAll('.ptype').forEach(function(b){b.classList.remove('on');});
-    btn.classList.add('on');
-    currentPhotoType=btn.getAttribute('data-pt');
-  };
-});
+// Photos
+document.querySelectorAll('.ptype').forEach(function(btn){btn.onclick=function(){document.querySelectorAll('.ptype').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');currentPhotoType=btn.getAttribute('data-pt');};});
 document.getElementById('btnCam').onclick=function(){document.getElementById('inpCam').click();};
 document.getElementById('btnGal').onclick=function(){document.getElementById('inpGal').click();};
 document.getElementById('photoThumb').onclick=function(){document.getElementById('inpCam').click();};
@@ -837,45 +701,26 @@ function handlePhoto(file){
   if(!file)return;
   var reader=new FileReader();
   reader.onload=function(e){
-    var url=e.target.result;
-    currentPhotoB64=url.split(',')[1];
+    var url=e.target.result;currentPhotoB64=url.split(',')[1];
     document.getElementById('photoThumb').innerHTML='<img src="'+url+'" alt="">';
-    document.getElementById('pResult').classList.remove('on');
-    document.getElementById('pResult').innerHTML='';
-    document.getElementById('btnAddPart').style.display='none';
-    currentPartName=null;
-    if(currentPhotoType==='part')identifyPart(currentPhotoB64,url);
-    else logPhotoDirect(url);
+    document.getElementById('pResult').classList.remove('on');document.getElementById('pResult').innerHTML='';
+    document.getElementById('btnAddPart').style.display='none';currentPartName=null;
+    if(currentPhotoType==='part')identifyPart(currentPhotoB64,url);else logPhotoDirect(url);
   };
   reader.readAsDataURL(file);
-  document.getElementById('inpCam').value='';
-  document.getElementById('inpGal').value='';
+  document.getElementById('inpCam').value='';document.getElementById('inpGal').value='';
 }
 
 function logPhotoDirect(url){
-  var labels={before:'Before',after:'After',general:'General'};
-  var lbl=labels[currentPhotoType]||'Photo';
-  var t=now();
+  var labels={before:'Before',after:'After',general:'General'};var lbl=labels[currentPhotoType]||'Photo';var t=now();
   summary.photo.push(lbl+' photo — '+t);
   photoLog.push({id:Date.now(),time:t,name:lbl+' Photo',detail:'',thumb:url,type:currentPhotoType});
-  saveAll();renderList('photoList',summary.photo);renderPhotoLog();
-  toast('✓ '+lbl+' photo logged');
+  saveAll();renderList('photoList',summary.photo);renderPhotoLog();toast('✓ '+lbl+' photo logged');
 }
 
 function identifyPart(b64,url){
   document.getElementById('pScanning').classList.add('on');
-  fetch('https://api.anthropic.com/v1/messages',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({
-      model:'claude-sonnet-4-20250514',max_tokens:300,
-      system:'Identify plumbing parts for an Australian plumber. Respond ONLY with JSON: {"name":"Short part name","detail":"Brief description with size and material","confidence":"high|medium|low"}',
-      messages:[{role:'user',content:[
-        {type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},
-        {type:'text',text:'What plumbing part is this?'}
-      ]}]
-    })
-  })
+  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:300,system:'Identify plumbing parts for an Australian plumber. Respond ONLY with JSON: {"name":"Short part name","detail":"Brief description","confidence":"high|medium|low"}',messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:'image/jpeg',data:b64}},{type:'text',text:'What plumbing part is this?'}]}]})})
   .then(function(r){return r.json();})
   .then(function(data){
     if(data.error)throw new Error(data.error.message);
@@ -885,33 +730,24 @@ function identifyPart(b64,url){
     var conf=parsed.confidence==='high'?'✓':parsed.confidence==='medium'?'~':'?';
     var re=document.getElementById('pResult');
     re.innerHTML='<div class="pname">'+conf+' '+esc(parsed.name)+'</div><div class="pdesc">'+esc(parsed.detail)+'</div>';
-    re.classList.add('on');
-    document.getElementById('btnAddPart').style.display='';
-    var t=now();
-    photoLog.push({id:Date.now(),time:t,name:parsed.name,detail:parsed.detail,thumb:url,type:'part'});
+    re.classList.add('on');document.getElementById('btnAddPart').style.display='';
+    var t=now();photoLog.push({id:Date.now(),time:t,name:parsed.name,detail:parsed.detail,thumb:url,type:'part'});
     renderPhotoLog();
   })
-  .catch(function(){
-    var re=document.getElementById('pResult');
-    re.innerHTML='<div class="pdesc" style="color:var(--red)">Could not identify — try clearer photo</div>';
-    re.classList.add('on');
-  })
+  .catch(function(){var re=document.getElementById('pResult');re.innerHTML='<div class="pdesc" style="color:var(--red)">Could not identify — try clearer photo</div>';re.classList.add('on');})
   .finally(function(){document.getElementById('pScanning').classList.remove('on');});
 }
 
 document.getElementById('btnAddPart').onclick=function(){
   if(!currentPartName)return;
-  summary.mat.push(currentPartName);
-  saveAll();renderList('matList',summary.mat);
-  toast('✓ '+currentPartName+' added');
-  document.getElementById('btnAddPart').style.display='none';
+  summary.mat.push(currentPartName);saveAll();renderList('matList',summary.mat);
+  toast('✓ '+currentPartName+' added');document.getElementById('btnAddPart').style.display='none';
 };
 
 function renderPhotoLog(){
   var el=document.getElementById('photoLogList');
   if(!photoLog.length){el.innerHTML='<div class="no-photos">No photos yet</div>';return;}
-  var tl={before:'📸 Before',after:'✅ After',part:'🔩 Part ID',general:'📷 General'};
-  var html='';
+  var tl={before:'📸 Before',after:'✅ After',part:'🔩 Part ID',general:'📷 General'};var html='';
   for(var i=photoLog.length-1;i>=0;i--){
     var p=photoLog[i];
     html+='<div class="pli">'+(p.thumb?'<img class="pli-thumb" src="'+p.thumb+'" alt="">':'<div class="pli-thumb" style="background:var(--border);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📷</div>')+'<div class="pli-info"><div class="pli-tag">'+(tl[p.type]||'Photo')+'</div><div class="pli-name">'+esc(p.name)+'</div>'+(p.detail?'<div style="font-size:0.72rem;color:var(--muted);">'+esc(p.detail)+'</div>':'')+'</div><div class="pli-time">'+p.time+'</div></div>';
@@ -919,55 +755,30 @@ function renderPhotoLog(){
   el.innerHTML=html;
 }
 
-// ── Panels ────────────────────────────────────────────────────────
+// Panels
 document.getElementById('hdrClients').onclick=function(){togglePanel('Clients');};
 document.getElementById('hdrQuotes').onclick=function(){togglePanel('Quotes');};
 document.getElementById('hdrHistory').onclick=function(){togglePanel('History');};
+function togglePanel(name){var body=document.getElementById('body'+name);var tog=document.getElementById('tog'+name);body.classList.toggle('open');tog.classList.toggle('open');}
+function openPanel(name){document.getElementById('body'+name).classList.add('open');document.getElementById('tog'+name).classList.add('open');setTimeout(function(){document.getElementById('body'+name).scrollIntoView({behavior:'smooth'});},100);}
 
-function togglePanel(name){
-  var body=document.getElementById('body'+name);
-  var tog=document.getElementById('tog'+name);
-  var isOpen=body.classList.contains('open');
-  body.classList.toggle('open');
-  tog.classList.toggle('open');
-}
-
-function openPanel(name){
-  document.getElementById('body'+name).classList.add('open');
-  document.getElementById('tog'+name).classList.add('open');
-  setTimeout(function(){document.getElementById('body'+name).scrollIntoView({behavior:'smooth'});},100);
-}
-
-// ── Client DB ─────────────────────────────────────────────────────
+// Clients
 function saveClients(){lss('vlog_clients',clients);}
-
 function addClient(name,address){
-  if(!name)return;
-  var idx=-1;
+  if(!name)return;var idx=-1;
   for(var i=0;i<clients.length;i++){if(clients[i].name.toLowerCase()===name.toLowerCase()){idx=i;break;}}
   if(idx>=0){clients[idx].address=address||clients[idx].address;toast('Updated: '+name);}
   else{clients.push({id:Date.now(),name:name,address:address||''});toast('Saved: '+name);}
   saveClients();renderClients();
 }
-
 function loadClient(id){
-  var c=null;
-  for(var i=0;i<clients.length;i++){if(clients[i].id===id){c=clients[i];break;}}
-  if(!c)return;
-  jobMeta.client=c.name;
-  if(c.address&&!jobMeta.address)jobMeta.address=c.address;
-  saveAll();refreshMetaDisp();
-  toast('Loaded: '+c.name);
+  var c=null;for(var i=0;i<clients.length;i++){if(clients[i].id===id){c=clients[i];break;}}
+  if(!c)return;jobMeta.client=c.name;if(c.address&&!jobMeta.address)jobMeta.address=c.address;
+  saveAll();refreshMetaDisp();toast('Loaded: '+c.name);
 }
-
 window.loadClient=loadClient;
-
-function deleteClient(id){
-  clients=clients.filter(function(c){return c.id!==id;});
-  saveClients();renderClients();toast('Removed');
-}
+function deleteClient(id){clients=clients.filter(function(c){return c.id!==id;});saveClients();renderClients();toast('Removed');}
 window.deleteClient=deleteClient;
-
 function renderClients(){
   var el=document.getElementById('clientList');
   if(!clients.length){el.innerHTML='<div class="no-data">No clients saved yet</div>';return;}
@@ -979,7 +790,7 @@ function renderClients(){
   el.innerHTML=html;
 }
 
-// ── Quote Builder ─────────────────────────────────────────────────
+// Quote
 document.getElementById('btnFillQ').onclick=function(){
   document.getElementById('qClient').value=jobMeta.client||'';
   document.getElementById('qAddr').value=jobMeta.address||'';
@@ -988,7 +799,6 @@ document.getElementById('btnFillQ').onclick=function(){
   toast('Filled from current job');
 };
 document.getElementById('btnBuildQ').onclick=buildQuote;
-
 function buildQuote(){
   var client=document.getElementById('qClient').value.trim()||'—';
   var address=document.getElementById('qAddr').value.trim()||'—';
@@ -998,39 +808,22 @@ function buildQuote(){
   if(!amt){toast('Enter a quote amount','var(--red)');return;}
   var qNum='Q-'+(jobMeta.jobNum||genJobNum());
   var qTxt='📋 QUOTE — ALL PLUMBED UP\n─────────────────────────\nQuote #: '+qNum+'\nDate:    '+(jobMeta.date||today)+'\nClient:  '+client+'\nAddress: '+address+'\n\nSCOPE OF WORKS:\n'+desc+'\n\nQUOTE AMOUNT: $'+amt+' (inc. GST)\n'+(notes?'\nNOTES:\n'+notes+'\n':'')+'\n─────────────────────────\nAll Plumbed Up\nABN: 32 642 467 258\nLic: 43918C | Ph: 0476 777 000\nallplumbedup.com.au\n\nThis quote is valid for 30 days.\nTo accept, please reply to this message.';
-  document.getElementById('qPreview').textContent=qTxt;
-  document.getElementById('qPreview').classList.add('on');
-  document.getElementById('btnQStella').style.display='';
-  document.getElementById('btnQClient').style.display='';
-  lastQuote=qTxt;
-  toast('Quote built ✓');
+  document.getElementById('qPreview').textContent=qTxt;document.getElementById('qPreview').classList.add('on');
+  document.getElementById('btnQStella').style.display='';document.getElementById('btnQClient').style.display='';
+  lastQuote=qTxt;toast('Quote built ✓');
 }
+document.getElementById('btnQStella').onclick=function(){if(!lastQuote)return;window.open('https://wa.me/61404257575?text='+encodeURIComponent(lastQuote),'_blank');};
+document.getElementById('btnQClient').onclick=function(){if(!lastQuote)return;window.open('https://wa.me/?text='+encodeURIComponent(lastQuote),'_blank');};
 
-document.getElementById('btnQStella').onclick=function(){
-  if(!lastQuote)return;
-  window.open('https://wa.me/61404257575?text='+encodeURIComponent(lastQuote),'_blank');
-};
-document.getElementById('btnQClient').onclick=function(){
-  if(!lastQuote)return;
-  window.open('https://wa.me/?text='+encodeURIComponent(lastQuote),'_blank');
-};
-
-// ── Job History ───────────────────────────────────────────────────
+// History
 function saveJobToHistory(){
-  var el=timerRunning?Date.now()-timerStart:timerElapsed;
-  var hrs=(el/3600000).toFixed(2);
-  var labour=hourlyRate?(hrs*hourlyRate).toFixed(2):null;
+  var el=timerRunning?Date.now()-timerStart:timerElapsed;var hrs=(el/3600000).toFixed(2);var labour=hourlyRate?(hrs*hourlyRate).toFixed(2):null;
   var job={id:Date.now(),savedAt:new Date().toISOString(),meta:JSON.parse(JSON.stringify(jobMeta)),summary:JSON.parse(JSON.stringify(summary)),log:JSON.parse(JSON.stringify(log)),hours:hrs,labour:labour,rate:hourlyRate};
-  jobHistory.unshift(job);
-  if(jobHistory.length>50)jobHistory=jobHistory.slice(0,50);
-  lss('vlog_history',jobHistory);
-  renderHistory();
-  toast('Job saved to history ✓');
+  jobHistory.unshift(job);if(jobHistory.length>50)jobHistory=jobHistory.slice(0,50);
+  lss('vlog_history',jobHistory);renderHistory();toast('Job saved to history ✓');
 }
-
 function renderHistory(){
-  var el=document.getElementById('histList');
-  var badge=document.getElementById('histBadge');
+  var el=document.getElementById('histList');var badge=document.getElementById('histBadge');
   badge.textContent=jobHistory.length+' job'+(jobHistory.length===1?'':'s');
   if(!jobHistory.length){el.innerHTML='<div class="no-data">No completed jobs yet</div>';return;}
   var html='';
@@ -1039,85 +832,61 @@ function renderHistory(){
     html+='<div class="hist-item" onclick="viewHistJob('+j.id+')">';
     html+='<div class="hist-hdr"><span class="hist-num">'+esc(j.meta.jobNum||'—')+'</span><span class="hist-date">'+esc(j.meta.date||'—')+'</span></div>';
     html+='<div class="hist-addr">'+esc(j.meta.address||'No address')+'</div>';
-    if(j.meta.client)html+='<div class="hist-client">'+esc(j.meta.client)+'</div>';
+    if(j.meta.client)html+='<div style="font-size:0.72rem;color:var(--muted);">'+esc(j.meta.client)+'</div>';
     html+='<div class="hist-tags">';
     if(j.meta.type)html+='<span class="hist-tag">'+esc(j.meta.type)+'</span>';
     if(j.hours>0)html+='<span class="hist-tag">'+j.hours+' hrs</span>';
-    if(j.labour)html+='<span class="hist-tag">$'+j.labour+' labour</span>';
-    if(j.summary.mat.length)html+='<span class="hist-tag">'+j.summary.mat.length+' materials</span>';
+    if(j.labour)html+='<span class="hist-tag">$'+j.labour+'</span>';
     html+='</div></div>';
   }
   el.innerHTML=html;
 }
-
 window.viewHistJob=function(id){
-  viewingJob=null;
-  for(var i=0;i<jobHistory.length;i++){if(jobHistory[i].id===id){viewingJob=jobHistory[i];break;}}
-  if(!viewingJob)return;
-  var j=viewingJob;
+  viewingJob=null;for(var i=0;i<jobHistory.length;i++){if(jobHistory[i].id===id){viewingJob=jobHistory[i];break;}}
+  if(!viewingJob)return;var j=viewingJob;
   document.getElementById('hmTitle').textContent=j.meta.jobNum||'Job Details';
   var html='<div class="hm-section" style="margin-bottom:8px;"><div class="hm-sec-title">Job Info</div>';
   html+='<div class="hm-meta"><strong>Date:</strong> '+esc(j.meta.date||'—')+'</div>';
   html+='<div class="hm-meta"><strong>Address:</strong> '+esc(j.meta.address||'—')+'</div>';
   html+='<div class="hm-meta"><strong>Client:</strong> '+esc(j.meta.client||'—')+'</div>';
   html+='<div class="hm-meta"><strong>Type:</strong> '+esc(j.meta.type||'—')+'</div></div>';
-  if(j.hours>0||j.labour){
-    html+='<div class="hm-section" style="margin-bottom:8px;"><div class="hm-sec-title">Hours & Labour</div>';
-    if(j.hours>0)html+='<div class="hm-meta"><strong>Time:</strong> '+j.hours+' hrs</div>';
-    if(j.rate)html+='<div class="hm-meta"><strong>Rate:</strong> $'+j.rate+'/hr</div>';
-    if(j.labour)html+='<div class="hm-meta"><strong>Labour:</strong> $'+j.labour+'</div>';
-    html+='</div>';
-  }
+  if(j.hours>0||j.labour){html+='<div class="hm-section" style="margin-bottom:8px;"><div class="hm-sec-title">Hours & Labour</div>';if(j.hours>0)html+='<div class="hm-meta"><strong>Time:</strong> '+j.hours+' hrs</div>';if(j.rate)html+='<div class="hm-meta"><strong>Rate:</strong> $'+j.rate+'/hr</div>';if(j.labour)html+='<div class="hm-meta"><strong>Labour:</strong> $'+j.labour+'</div></div>';}
   if(j.summary.work.length){html+='<div class="hm-section" style="margin-bottom:8px;"><div class="hm-sec-title">Work Done</div><ul>'+j.summary.work.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul></div>';}
   if(j.summary.mat.length){html+='<div class="hm-section" style="margin-bottom:8px;"><div class="hm-sec-title">Materials</div><ul>'+j.summary.mat.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul></div>';}
-  if(j.summary.note.length){html+='<div class="hm-section" style="margin-bottom:8px;"><div class="hm-sec-title">Notes</div><ul>'+j.summary.note.map(function(i){return '<li>'+esc(i)+'</li>';}).join('')+'</ul></div>';}
   document.getElementById('hmBody').innerHTML=html;
   document.getElementById('histModal').classList.add('open');
 };
-
 document.getElementById('hmClose').onclick=function(){document.getElementById('histModal').classList.remove('open');};
 document.getElementById('btnHmClose').onclick=function(){document.getElementById('histModal').classList.remove('open');};
 document.getElementById('btnHmStella').onclick=function(){
-  if(!viewingJob)return;
-  var j=viewingJob;
-  var msg='🔧 *JOB REPORT — All Plumbed Up*\n─────────────────────\n*Job #:* '+(j.meta.jobNum||'—')+'\n*Date:* '+(j.meta.date||'—')+'\n*Address:* '+(j.meta.address||'—')+'\n*Client:* '+(j.meta.client||'—')+'\n*Type:* '+(j.meta.type||'—')+'\n';
-  if(j.hours>0)msg+='\n⏱ *Time:* '+j.hours+' hrs';
-  if(j.labour)msg+='\n💰 *Labour:* $'+j.labour;
+  if(!viewingJob)return;var j=viewingJob;
+  var msg='🔧 *JOB REPORT — All Plumbed Up*\n─────────────────────\n*Job #:* '+(j.meta.jobNum||'—')+'\n*Date:* '+(j.meta.date||'—')+'\n*Address:* '+(j.meta.address||'—')+'\n*Client:* '+(j.meta.client||'—')+'\n';
+  if(j.hours>0)msg+='\n⏱ *Time:* '+j.hours+' hrs';if(j.labour)msg+='\n💰 *Labour:* $'+j.labour;
   if(j.summary.work.length){msg+='\n\n✅ *Work Done*\n';j.summary.work.forEach(function(i){msg+='• '+i+'\n';});}
   if(j.summary.mat.length){msg+='\n🔧 *Materials*\n';j.summary.mat.forEach(function(i){msg+='• '+i+'\n';});}
   msg+='\n─────────────────────\nAll Plumbed Up | ABN: 32 642 467 258 | Lic: 43918C\n_Please raise invoice._';
   window.open('https://wa.me/61404257575?text='+encodeURIComponent(msg),'_blank');
 };
 
-// ── New Job ───────────────────────────────────────────────────────
+// New job
 function confirmNewJob(){
-  if(!confirm('Save current job to history and start a new one?'))return;
+  if(!confirm('Save current job and start new one?'))return;
   if(log.length>0||jobMeta.address)saveJobToHistory();
   log=[];summary={mat:[],work:[],photo:[],note:[]};photoLog=[];
   jobMeta={address:'',jobNum:genJobNum(),date:today,client:'',type:'timed',flatRate:null};
-  timerRunning=false;timerElapsed=0;timerStart=null;
-  clearInterval(timerInterval);
-  localStorage.removeItem('vlog_timerstart');
-  localStorage.setItem('vlog_elapsed','0');
-  saveAll();
-  refreshMetaDisp();renderAll();renderPhotoLog();
-  document.getElementById('timerDisp').textContent='00:00:00';
-  document.getElementById('timerDisp').classList.remove('running');
-  document.getElementById('btnCI').className='tbtn tbtn-in';
-  document.getElementById('btnCI').disabled=false;
-  document.getElementById('btnCO').className='tbtn tbtn-off';
-  document.getElementById('btnCO').disabled=true;
-  updateTotals();setType('timed',true);
-  document.getElementById('tbubble').classList.remove('on');
-  document.getElementById('howTo').style.display='';
-  toast('Ready for new job!');
+  timerRunning=false;timerElapsed=0;timerStart=null;clearInterval(timerInterval);
+  localStorage.removeItem('vlog_timerstart');localStorage.setItem('vlog_elapsed','0');
+  saveAll();refreshMetaDisp();renderAll();renderPhotoLog();
+  document.getElementById('timerDisp').textContent='00:00:00';document.getElementById('timerDisp').classList.remove('running');
+  document.getElementById('btnCI').className='tbtn tbtn-in';document.getElementById('btnCI').disabled=false;
+  document.getElementById('btnCO').className='tbtn tbtn-off';document.getElementById('btnCO').disabled=true;
+  updateTotals();setType('timed',true);toast('Ready for new job!');
 }
 document.getElementById('btnNewJob').onclick=confirmNewJob;
 
-// ── Send to Stella ────────────────────────────────────────────────
+// Send to Stella
 document.getElementById('btnStella').onclick=function(){
-  var el=timerRunning?Date.now()-timerStart:timerElapsed;
-  var hrs=(el/3600000).toFixed(2);
+  var el=timerRunning?Date.now()-timerStart:timerElapsed;var hrs=(el/3600000).toFixed(2);
   var labour=hourlyRate?'$'+(hrs*hourlyRate).toFixed(2):'—';
   var jt=jobMeta.type==='timed'?'Timed Job':jobMeta.type==='charge'?'Do & Charge':'Subcontract';
   var isQ=jobMeta.flatRate&&jobMeta.type==='charge';
@@ -1125,8 +894,7 @@ document.getElementById('btnStella').onclick=function(){
   msg+='*Job Type:* '+jt+'\n*Date:* '+(jobMeta.date||today)+'\n*Job #:* '+(jobMeta.jobNum||'—')+'\n*Address:* '+(jobMeta.address||'—')+'\n';
   if(jobMeta.client)msg+='*Client:* '+jobMeta.client+'\n';
   msg+='\n⏱ *Hours & Labour*\n';
-  if(el>0)msg+='Time on site: '+hrs+' hrs\n';
-  if(hourlyRate)msg+='Rate: $'+hourlyRate+'/hr\n';
+  if(el>0)msg+='Time on site: '+hrs+' hrs\n';if(hourlyRate)msg+='Rate: $'+hourlyRate+'/hr\n';
   if(el>0&&hourlyRate)msg+='Labour: '+labour+'\n';
   if(jobMeta.flatRate)msg+='*'+(isQ?'Quote':'Charge')+' Amount: $'+jobMeta.flatRate+'*\n';
   if(summary.work.length){msg+='\n✅ *Work Done*\n';summary.work.forEach(function(i){msg+='• '+i+'\n';});}
@@ -1139,47 +907,34 @@ document.getElementById('btnStella').onclick=function(){
   toast('Opening WhatsApp for Stella ✓');
 };
 
-// ── Export CSV ────────────────────────────────────────────────────
+// CSV
 document.getElementById('btnCSV').onclick=function(){
-  var el=timerRunning?Date.now()-timerStart:timerElapsed;
-  var hrs=(el/3600000).toFixed(2);
+  var el=timerRunning?Date.now()-timerStart:timerElapsed;var hrs=(el/3600000).toFixed(2);
   var labour=hourlyRate?'$'+(hrs*hourlyRate).toFixed(2):'—';
-  var csv='All Plumbed Up — Job Report\nAddress,'+( jobMeta.address||'—')+'\nDate,'+(jobMeta.date||'—')+'\nJob #,'+(jobMeta.jobNum||'—')+'\nClient,'+(jobMeta.client||'—')+'\nType,'+(jobMeta.type||'—')+'\n\nHOURS & LABOUR\nTime on site,'+hrs+' hrs\nHourly rate,$'+(hourlyRate||'—')+'\nLabour cost,'+labour+'\n\nMATERIALS NEEDED\n';
-  summary.mat.forEach(function(i){csv+=',\"'+i+'\"\n';});
-  csv+='\nWORK DONE\n';summary.work.forEach(function(i){csv+=',\"'+i+'\"\n';});
-  csv+='\nPHOTOS\n';summary.photo.forEach(function(i){csv+=',\"'+i+'\"\n';});
-  csv+='\nNOTES\n';summary.note.forEach(function(i){csv+=',\"'+i+'\"\n';});
-  csv+='\nFULL LOG\nTime,Note\n';log.forEach(function(e){csv+=e.time+',\"'+e.text.replace(/"/g,'""')+'\"\n';});
-  var dt=new Date().toISOString().split('T')[0];
-  var addr=(jobMeta.address||'job').replace(/\s+/g,'-').replace(/[^a-zA-Z0-9-]/g,'');
-  var blob=new Blob([csv],{type:'text/csv'});
-  var url=URL.createObjectURL(blob);
-  var a=document.createElement('a');
-  a.href=url;a.download='APU-'+dt+'-'+addr+'.csv';a.click();
-  URL.revokeObjectURL(url);
+  var csv='All Plumbed Up — Job Report\nAddress,'+(jobMeta.address||'—')+'\nDate,'+(jobMeta.date||'—')+'\nJob #,'+(jobMeta.jobNum||'—')+'\nClient,'+(jobMeta.client||'—')+'\nType,'+(jobMeta.type||'—')+'\n\nHOURS\nTime,'+hrs+' hrs\nRate,$'+(hourlyRate||'—')+'\nLabour,'+labour+'\n\nMATERIALS\n';
+  summary.mat.forEach(function(i){csv+=',\"'+i+'\"\n';});csv+='\nWORK DONE\n';summary.work.forEach(function(i){csv+=',\"'+i+'\"\n';});
+  csv+='\nPHOTOS\n';summary.photo.forEach(function(i){csv+=',\"'+i+'\"\n';});csv+='\nNOTES\n';summary.note.forEach(function(i){csv+=',\"'+i+'\"\n';});
+  csv+='\nFULL LOG\n';log.forEach(function(e){csv+=e.time+',\"'+e.text.replace(/"/g,'""')+'\"\n';});
+  var dt=new Date().toISOString().split('T')[0];var addr=(jobMeta.address||'job').replace(/\s+/g,'-').replace(/[^a-zA-Z0-9-]/g,'');
+  var blob=new Blob([csv],{type:'text/csv'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download='APU-'+dt+'-'+addr+'.csv';a.click();URL.revokeObjectURL(url);
 };
 
-// ── Copy Report ───────────────────────────────────────────────────
-document.getElementById('btnCopy').onclick=function(){
-  var el=timerRunning?Date.now()-timerStart:timerElapsed;
-  var hrs=(el/3600000).toFixed(2);
+// Copy
+document.getElementById('btnCopyR').onclick=function(){
+  var el=timerRunning?Date.now()-timerStart:timerElapsed;var hrs=(el/3600000).toFixed(2);
   var labour=hourlyRate?'$'+(hrs*hourlyRate).toFixed(2):'—';
   var r='ALL PLUMBED UP — JOB REPORT\n================================\n';
   r+='Address : '+(jobMeta.address||'—')+'\nDate    : '+(jobMeta.date||'—')+'\nJob #   : '+(jobMeta.jobNum||'—')+'\nClient  : '+(jobMeta.client||'—')+'\nType    : '+(jobMeta.type||'—')+'\n\n';
-  r+='HOURS & LABOUR\n--------------------\nTime: '+hrs+' hrs\nRate: $'+(hourlyRate||'—')+'\nLabour: '+labour+'\n\n';
-  r+='MATERIALS NEEDED\n--------------------\n';summary.mat.length?summary.mat.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
-  r+='\nWORK DONE\n--------------------\n';summary.work.length?summary.work.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
-  r+='\nPHOTOS\n--------------------\n';summary.photo.length?summary.photo.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
-  r+='\nNOTES\n--------------------\n';summary.note.length?summary.note.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
-  r+='\nFULL VOICE LOG\n--------------------\n';log.forEach(function(e){r+='['+e.time+'] '+e.text+'\n';});
-  navigator.clipboard.writeText(r).then(function(){
-    toast('Report copied for Stella ✓');
-    document.getElementById('btnCopy').textContent='✓ Copied!';
-    setTimeout(function(){document.getElementById('btnCopy').textContent='📋 Copy';},2000);
-  });
+  r+='HOURS\nTime: '+hrs+' hrs | Rate: $'+(hourlyRate||'—')+' | Labour: '+labour+'\n\n';
+  r+='MATERIALS\n';summary.mat.length?summary.mat.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
+  r+='\nWORK DONE\n';summary.work.length?summary.work.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
+  r+='\nPHOTOS\n';summary.photo.length?summary.photo.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
+  r+='\nNOTES\n';summary.note.length?summary.note.forEach(function(i){r+='• '+i+'\n';}):r+='(none)\n';
+  r+='\nFULL LOG\n';log.forEach(function(e){r+='['+e.time+'] '+e.text+'\n';});
+  navigator.clipboard.writeText(r).then(function(){toast('Copied for Stella ✓');document.getElementById('btnCopyR').textContent='✓ Copied!';setTimeout(function(){document.getElementById('btnCopyR').textContent='📋 Copy';},2000);});
 };
 
-// ── Run all renders on load ───────────────────────────────────────
+// Run on load
 refreshMetaDisp();
 setType(jobMeta.type,true);
 updateRateDisp();
