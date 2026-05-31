@@ -286,6 +286,7 @@ hr.div{border:none;border-top:1px solid var(--border);margin:14px 0;}
     </div>
     <div class="mic-lbl" id="micLbl">Tap to speak</div>
     <div class="tbubble" id="tbubble"></div>
+    <button class="btn btn-gh" id="btnMicPerm" style="font-size:0.7rem;margin-top:6px;border-color:var(--orange);color:var(--orange);">🎤 Enable Microphone</button>
   </div>
 
   <div class="how-to" id="howTo">
@@ -592,6 +593,27 @@ function updateTotals(){
   if(el>0&&hourlyRate){document.getElementById('totLabour').textContent='$'+(hrs*hourlyRate).toFixed(2);}
   else{document.getElementById('totLabour').textContent='—';}
 }
+
+// ── Mic permission button ─────────────────────────────────────────
+document.getElementById('btnMicPerm').onclick=function(){
+  if(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia){
+    navigator.mediaDevices.getUserMedia({audio:true})
+    .then(function(stream){
+      stream.getTracks().forEach(function(t){t.stop();});
+      document.getElementById('btnMicPerm').textContent='✓ Microphone allowed!';
+      document.getElementById('btnMicPerm').style.borderColor='var(--green)';
+      document.getElementById('btnMicPerm').style.color='var(--green)';
+      toast('Microphone enabled — tap the mic to speak!');
+      setTimeout(function(){document.getElementById('btnMicPerm').style.display='none';},3000);
+    })
+    .catch(function(err){
+      toast('Microphone blocked — check Settings > Apps > Chrome > Permissions','var(--red)');
+      document.getElementById('btnMicPerm').textContent='⚠️ Blocked — tap for help';
+    });
+  } else {
+    toast('Browser does not support microphone','var(--red)');
+  }
+};
 
 // ── Mic ───────────────────────────────────────────────────────────
 document.getElementById('micBtn').onclick=function(){
